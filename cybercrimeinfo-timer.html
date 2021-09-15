@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+      body {
+          margin: 0;
+          padding: 0;
+      }
+
+      .price {
+          position: absolute;
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 200px;
+          font-family: 'Roboto', sans-serif;
+          z-index: 10;
+      }
+
+      .buttons {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          z-index: 20;
+      }
+      .footer {
+          position: absolute;
+          bottom: 15px;
+          margin-left: auto;
+          margin-right: auto;
+          left: 0;
+          right: 0;
+          text-align: center;
+          z-index: 20;
+      }
+      .footer img {
+          width: 16px;
+      }
+  </style>
+</head>
+<body>
+<div class="buttons">
+  <button class="start" onclick="startTimer()">Start</button>
+  <button disabled class="stop" onclick="stopTimer()">Stop</button>
+  <button onclick="resetTimer()">Reset</button>
+  <div class="time"></div>
+</div>
+<div class="price">
+  &euro;
+  <span class="amount">
+    0,00
+  </span>
+</div>
+<div class="footer">
+  <img src="https://f.eu1.jwwb.nl/public/h/t/h/temp-ofinjmcgqxvqzvyrppbf/0078ks/Tekst-C-Cybercrimeinfonl-logo-1080x1080.jpg" alt="cybercrimeinfo logo" />
+  <a href="https://cybercrimeinfo.nl">cybercrimeinfo.nl</a>
+</div>
+<script type="text/javascript">
+  let timer = null;
+  // 3 per 1000ms = 0.03 per 10ms
+  const amountToAdd = 0.03;
+  let amount = 0.00;
+
+  setInterval(function () {
+    const now = new Date();
+    document.querySelector('.time').innerHTML = now.toLocaleTimeString();
+  }, 1000);
+
+  function startTimer () {
+    if (timer) return;
+    document.querySelector('button.start').disabled = true;
+    document.querySelector('button.stop').disabled = false;
+    timer = setInterval(tick, 10);
+  }
+
+  function stopTimer () {
+    if (!timer) return;
+    document.querySelector('button.start').disabled = false;
+    document.querySelector('button.stop').disabled = true;
+    clearInterval(timer);
+    timer = null;
+  }
+
+  function resetTimer () {
+    stopTimer();
+    amount = 0.00;
+    document.querySelector('.amount').innerHTML = '0,00';
+  }
+
+  function tick () {
+    amount += amountToAdd;
+    document.querySelector('.amount').innerHTML = amount.toLocaleString('nl', { minimumFractionDigits: 2 });
+  }
+</script>
+</body>
+</html>
+
